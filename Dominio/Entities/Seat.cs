@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entities
 {
-    internal class Seat
+    public class Seat
     {
+        public int Id { get; set; }
+        public int SectorId { get; set; }
+        public int SeatNumber { get; set; }
+        public SeatStatus Status { get; set; }
+    }
+    public enum SeatStatus
+    {
+        Available,
+        Reserved,
+        Sold
     }
 }
