@@ -10,7 +10,10 @@ namespace Dominio.Entities
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public User User { get; set; }
         public int SeatId { get; set; }
+        public Seat Seat { get; set; }//relacion
+
         public ReservationStatus Status { get; set; }
         public DateTime ReservedAt { get; set; }
         public DateTime ExpiresAt { get; set; }

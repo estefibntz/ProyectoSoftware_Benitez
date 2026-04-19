@@ -13,6 +13,8 @@ namespace Dominio.Entities
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Capacity { get; set; }
+        public Event Event { get; set; }//relacion
+        public List<Seat> Seats { get; set; } = new();//relacion
 
     }
 }

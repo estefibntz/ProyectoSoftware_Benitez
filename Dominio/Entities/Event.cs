@@ -13,6 +13,7 @@ namespace Dominio.Entities
         public DateTime EventTime { get; set; }
         public EventStatus Status { get; set; }
         public string Venue { get; set; }
+        public List<Sector> Sectors { get; set; } = new();//Relacion
     }
     public enum EventStatus
     {

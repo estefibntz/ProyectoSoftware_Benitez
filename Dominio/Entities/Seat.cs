@@ -12,6 +12,9 @@ namespace Dominio.Entities
         public int SectorId { get; set; }
         public int SeatNumber { get; set; }
         public SeatStatus Status { get; set; }
+        public Sector Sector { get; set; }//relacion
+
+
     }
     public enum SeatStatus
     {
