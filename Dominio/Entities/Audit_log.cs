@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entities
 {
-    internal class Audit_log
+    public class Audit_log
     {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public string Action { get; set; }
+        public string EntityType { get; set; }
+        public string EntityId { get; set; }
+        public string Details { get; set; }
+        public DateTime CreatedAt { get; set; }
+
     }
 }
