@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace Dominio.Entities
 {
-    internal class Event
+    public class Event
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime EventTime { get; set; }
+        public EventStatus Status { get; set; }
+        public string Venue { get; set; }
+    }
+    public enum EventStatus
+    {
+        Scheduled,
+        Ongoing,
+        Finished,
+        Cancelled
     }
 }
