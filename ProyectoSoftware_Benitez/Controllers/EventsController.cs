@@ -22,6 +22,14 @@ namespace ProyectoSoftware_Benitez.Controllers
             var events = await _context.Events
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
+                .Select(e => new
+                {
+                    e.Id,
+                    e.Name,
+                    e.EventTime,
+                    Status=e.Status.ToString(),
+                    e.Venue
+                })
                 .ToListAsync();
             return Ok(events);
         }
