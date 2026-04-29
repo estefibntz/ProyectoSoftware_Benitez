@@ -11,6 +11,7 @@ namespace Dominio.Entities
         public int Id { get; set; }
         public int SectorId { get; set; }
         public int SeatNumber { get; set; }
+        public string RowIdentifier { get; set; }//para asignar letras a las filas
         public SeatStatus Status { get; set; }
         public Sector Sector { get; set; }//relacion
 

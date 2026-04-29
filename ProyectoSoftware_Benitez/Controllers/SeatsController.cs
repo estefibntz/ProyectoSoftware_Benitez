@@ -19,7 +19,18 @@ namespace ProyectoSoftware_Benitez.Controllers
         public async Task<IActionResult> GetSeats()
         {
             var seats = await _context.Seats
-                .Include(s => s.Sector)
+                .OrderBy(s=>s.RowIdentifier)
+                .ThenBy(s=>s.SeatNumber)
+                .Select(s => new
+                {
+                    s.Id,
+                    s.SeatNumber,
+                    s.RowIdentifier,
+                    Status= s.Status.ToString(),
+                    s.SectorId
+                })
+         
+
                 .ToListAsync();
             return Ok(seats);
         }

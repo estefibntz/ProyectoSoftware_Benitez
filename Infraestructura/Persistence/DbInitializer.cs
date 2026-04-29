@@ -45,21 +45,34 @@ namespace Infraestructura.Persistence
             context.Sectors.Add(SectorB);
             context.SaveChanges();
 
+
+            char rowvip = 'A';
+            char rowgeneral = 'F';
             for(int i = 1; i <= 50; i++)
             {
                 context.Seats.Add(new Seat
                 {
                     SectorId = SectorA.Id,
-                    SeatNumber = i,
-                    Status= SeatStatus.Available,
+                    SeatNumber = ((i-1)%10)+1,
+                    RowIdentifier = rowvip.ToString(),
+                    Status = SeatStatus.Available,
                 });
+                if (i % 10 == 0)
+                {
+                    rowvip++;
+                }
 
                 context.Seats.Add(new Seat
                 {
                     SectorId = SectorB.Id,
-                    SeatNumber = i,
+                    SeatNumber = ((i-1)%10)+1,
+                    RowIdentifier=rowgeneral.ToString(),
                     Status = SeatStatus.Available,
                 });
+                if (i % 10 == 0)
+                {
+                    rowgeneral++;
+                }
             }
             context.SaveChanges();
         }

@@ -19,6 +19,8 @@ namespace ProyectoSoftware_Benitez.Controllers
         public async Task<IActionResult> ReserveSeat(int seatId,int userId)
         {
             var seat = await _context.Seats.FindAsync(seatId);
+            var user = await _context.Users.FindAsync(userId);
+
             if (seat == null)
             {
                 return NotFound("Butaca no encontrada");
@@ -26,6 +28,10 @@ namespace ProyectoSoftware_Benitez.Controllers
             if (seat.Status!= SeatStatus.Available)
             {
                 return BadRequest("Butaca no disponible");
+            }
+            if (user == null)
+            {
+                return NotFound("Usuario no existe");//agregue
             }
 
             seat.Status = SeatStatus.Reserved;
