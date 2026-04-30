@@ -11,6 +11,17 @@ namespace Infraestructura.Persistence
     {
         public static void Seed(AppDbContext context)
         {
+            if (!context.Users.Any())
+            {
+                context.Users.Add(new User
+                {
+                    Name = "Usuario Test",
+                    email = "test@mail.com"
+                });
+
+                context.SaveChanges();
+            }//usuario de prueba 
+
             if (context.Events.Any())
                 return;
 

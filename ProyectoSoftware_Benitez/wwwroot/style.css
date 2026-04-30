@@ -30,11 +30,12 @@ button{
     cursor:pointer;
 }
 .seat{
-    width:40px;
+    display:inline-block;
+    width:45px;
     height:40px;
     margin:5px;
-    display:inline-flex;
-    justify-content:center;
+    text-align:center;
+   
     align-items:center;
     cursor:pointer;
     border-radius:5px;
@@ -62,5 +63,10 @@ button{
     height:15px;
     display:inline-block;
     margin:5px;
+}
+#seatsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
 }
 
