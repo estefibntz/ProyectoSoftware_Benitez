@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+      <title>Ticketing</title>
+      <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+      <header>
+          <h1> Proximos Eventos</h1>
+      </header>
+
+      <main>
+          <section id="catalogo">
+              <h2> Cartelera</h2>
+              <div id="eventsContainer"></div>
+          </section>
+
+          <section id="seleccion_asientos">
+              <h2> Selecciona tu ubicacion</h2>
+              <div id="seatsContainer"></div>
+
+              <div class="leyenda">
+                  <span class="box available"></span>Disponible
+                  <span class="box reserved"></span>Reservado
+                  <span class="box sold"></span>Vendido
+              </div>
+
+          </section>
+      </main>
+
+      <script src="app.js"></script>
+
+  </body>
+ 
+
+</html>
