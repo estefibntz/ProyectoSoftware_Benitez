@@ -15,48 +15,75 @@ namespace ProyectoSoftware_Benitez.Controllers
             _context = context;
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> ReserveSeat(int seatId,int userId)
+        public async Task<IActionResult> ReserveSeat(int seatId, int userId)
         {
-            var seat = await _context.Seats.FindAsync(seatId);
-            var user = await _context.Users.FindAsync(userId);
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
 
-            if (seat == null)
-            {
-                return NotFound("Butaca no encontrada");
-            }
-            if (seat.Status!= SeatStatus.Available)
-            {
-                return BadRequest("Butaca no disponible");
-            }
-            if (user == null)
-            {
-                return NotFound("Usuario no existe");//agregue
-            }
+                var seat = await _context.Seats.FindAsync(seatId);
+                var user = await _context.Users.FindAsync(userId);
 
-            seat.Status = SeatStatus.Reserved;
-            var reservation = new Reservation
-            {
-                SeatId = seatId,
-                UserId = userId,
-                Status = ReservationStatus.Confirmed,
-                ReservedAt = DateTime.Now,
-                ExpiresAt = DateTime.Now.AddMinutes(5),
-            };
-            _context.Reservations.Add(reservation);
+                if (seat == null)
+                {
+                    return NotFound("Butaca no encontrada");
+                }
+                if (user == null)
+                {
+                    return NotFound("Usuario no existe");
+                }
 
-            var log = new Audit_log
+                if(seat.Status != SeatStatus.Available)
+                {
+                    var failedlog = new Audit_log
+                    {
+                        UserId = userId,
+                        Action = "Reserva fallida",
+                        EntityType = " Seat",
+                        EntityId = seatId.ToString(),
+                        Details = "Intento sobre butaca ocupada no disponible",
+                        CreatedAt = DateTime.Now,
+                    };
+                    _context.Audit_Logs.Add(failedlog);
+                    await _context.SaveChangesAsync();
+                    return Conflict("Butaca no disponible");
+                }
+
+                seat.Status = SeatStatus.Reserved;
+                var reservation = new Reservation
+                {
+                    SeatId = seatId,
+                    UserId = userId,
+                    Status = ReservationStatus.Confirmed,
+                    ReservedAt = DateTime.Now,
+                    ExpiresAt = DateTime.Now.AddMinutes(5),
+                };
+                _context.Reservations.Add(reservation);
+
+                var log = new Audit_log
+                {
+                    UserId = userId,
+                    Action = "Reserva",
+                    EntityType = "Seat",
+                    EntityId = seatId.ToString(),
+                    Details = "Reserva creada",
+                    CreatedAt = DateTime.Now,
+                };
+                _context.Audit_Logs.Add(log);
+                await _context.SaveChangesAsync();
+             
+                return Ok("Reserva Exitosa");
+            }
+            catch (Exception)
             {
-                UserId = userId,
-                Action = "Reserva",
-                EntityType = "Seat",
-                EntityId = seatId.ToString(),
-                Details = "Reserva creada",
-                CreatedAt = DateTime.Now,
-            };
-            _context.Audit_Logs.Add(log);
-            await _context.SaveChangesAsync();
-            return Ok("Reserva Exitosa");
-        }
+                await transaction.RollbackAsync();
+                return StatusCode(500, "Error de reserva");
+            }
+            
+
+        }    
+
     }
 }

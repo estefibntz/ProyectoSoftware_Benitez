@@ -54,7 +54,7 @@ function renderSeats(seats) {
 }
 
 async function reserveSeat(seatId) {
-    const userId = 2;
+    const userId = 1;
     const response = await fetch(`https://localhost:7172/api/Reservations?seatId=${seatId}&userId=${userId}`,
         {
             method: `POST`
